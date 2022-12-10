@@ -1,0 +1,11 @@
+# 2022-11-29 Tuesday
+const directory = await getDirectoryAccess();
+for await (const entry of directory.entries())
+VM1181:1 (2) ['directory-access.js', FileSystemFileHandle]0: "directory-access.js"1: FileSystemFileHandlekind: "file"name: "directory-access.js"[[Prototype]]: FileSystemFileHandlelength: 2[[Prototype]]: Array(0)
+VM1181:1 (2) ['main.js', FileSystemFileHandle]
+VM1181:1 (2) ['.git', FileSystemDirectoryHandle]
+VM1181:1 (2) ['index.html', FileSystemFileHandle]
+const file = entry[1];
+const writable = await file.createWritable()
+writable.write('dogs')
+writable.close()
