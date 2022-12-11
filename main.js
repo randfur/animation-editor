@@ -1,20 +1,4 @@
-import {Raii, raiiRoot} from './raii.js';
-
-class Element extends Raii {
-  constructor({tag, parent, text, onClick}) {
-    super();
-    this.element = document.createElement(tag);
-    this.element.textContent = text;
-    if (onClick) {
-      this.element.addEventListener('click', onClick);
-    }
-    parent.appendChild(this.element);
-  }
-
-  customDestructor() {
-    this.element.remove();
-  }
-}
+import {Ui} from './ui.js';
 
 function createResolvablePromise() {
   let resolve;
@@ -24,21 +8,13 @@ function createResolvablePromise() {
 }
 
 async function main() {
-  await raiiRoot(async root => {
-    const clicked = createResolvablePromise();
-    root.button = Element.create({
-      tag: 'button',
-      parent: document.body,
-      text: 'click me',
-      onClick: clicked.resolve,
-    });
-    root.text = Element.create({
-      tag: 'div',
-      parent: document.body,
-      text: 'bark bark bark brak',
-    });
-    await clicked;
-  });
+  document.body.appendChild(new class extends Ui {
+    constructor() {
+      super({
+        dogs: 'woof woof',
+      });
+    }
+  }().element);
 }
 
 main();
