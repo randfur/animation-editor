@@ -1,20 +1,14 @@
-import {Ui} from './ui.js';
-
-function createResolvablePromise() {
-  let resolve;
-  const promise = new Promise(r => resolve = r);
-  promise.resolve = resolve;
-  return promise;
-}
+import {runUi, Ui} from './ui.js';
 
 async function main() {
-  document.body.appendChild(new class extends Ui {
-    constructor() {
-      super({
-        dogs: 'woof woof',
-      });
+  runUi(class extends Ui {
+    static tag = 'test-bark';
+    init() {
+      this.render([
+        {text: 'dogs'},
+      ]);
     }
-  }().element);
+  });
 }
 
 main();

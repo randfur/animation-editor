@@ -2,76 +2,94 @@ function inheritsFrom(TypeA, TypeB) {
   return TypeA === TypeB || TypeA.prototype instanceof TypeB;
 }
 
-function renderTemplate(template, slots) {
+class CreateUi {
+  constructor(uiType, initParams={}) {
+    console.assert(inheritsFrom(uiType, Ui));
+    this.uiType = uiType;
+    this.initParams = initParams;
+  }
+}
+
+function appendFlattened(destination, element, isContainer) {
+  if (isContainer) {
+    for (const child of element.children) {
+      destination.appendChild(child);
+    }
+  } else {
+    destination.appendChild(element);
+  }
+}
+
+function renderTemplate(template, refs) {
   if (template === null) {
     const element = document.createElement('div');
     element.style.display = 'none';
-    return element;
+    return {
+      element,
+      isContainer: false,
+    };
   }
 
   if (typeof template === 'string') {
     const element = document.createElement('div');
     element.textContent = template;
-    return element;
+    return {
+      element,
+      isContainer: false,
+    };
   }
 
-  if (inheritsFrom(template, Ui)) {
-    return new template().element;
+  if (template instanceof CreateUi) {
+    const {uiType, initParams} = template;
+    if (!customElements.get(uiType.tag)) {
+      customElements.define(uiType.tag, uiType);
+    }
+    const element = document.createElement(uiType.tag);
+    element.init(initParams);
+    return {
+      element,
+      isContainer: false,
+    };
   }
 
   if (template instanceof Array) {
-    const element = document.createElement('div');
+    const container = document.createElement('div');
     for (const item of template) {
-      element.appendChild(renderTemplate(item, slots));
+      const {element, isContainer} = renderTemplate(item, refs);
+      appendFlattened(container, element, isContainer);
     }
-    return element;
+    return {
+      element: container,
+      isContainer: true,
+    };
   }
 
   console.assert(template instanceof Object);
-  const element = document.createElement('div');
+  const container = document.createElement('div');
   for (const [key, value] of Object.entries(template)) {
-    slots[key] = renderTemplate(value);
-    element.appendChild(slots[key]);
+    const {element} = renderTemplate(value, refs);
+    element.id = key;
+    refs[key] = element;
+    container.appendChild(element);
   }
-  return element;
+  return {
+    element: container,
+    isContainer: true,
+  };
 }
 
-export class Ui {
-  constructor(template) {
-    this.slots = {};
-    this.element = renderTemplate(template, this.slots);
-    this.element.model = this;
+export class Ui extends HTMLElement {
+  render(template) {
+    this.refs = {};
+    const {element, isContainer} = renderTemplate(template, this.refs);
+    appendFlattened(this, element, isContainer);
   }
 }
 
-// class AnimationEditor extends Ui {
-//   static template = {
-//     root: SplashScreen,
-//   };
-// }
+export function createUi(uiType, initParams) {
+  return new CreateUi(uiType, initParams);
+}
 
-// class SplashScreen extends Ui {
-//   static template = {
-//     title: text('Animation Editor'),
-//     button: button('quit', (target, event) => target.quit()),
-//   };
-
-//   constructor() {
-//     super();
-//   }
-// }
-
-// class KeyframeEditor extends Ui {
-//   static template = [
-//     'canvas',
-//     component('timeline', KeyframeTimeline),
-//     element({
-//       tag: 'div',
-//       id: 'dog',
-//       classList: ['dogs'],
-//       children: [
-//         element({tag: 'span', text: 'woof'}),
-//       ],
-//     }),
-//   ];
-// }
+export function runUi(uiType, initParams) {
+  document.body.appendChild(renderTemplate(createUi(uiType, initParams), {}).element);
+}
