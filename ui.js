@@ -15,9 +15,14 @@ export class Ui extends HTMLElement {
   }
 }
 
-export function createElement({tag='div', text='', children}) {
+export function createElement({tag='div', text='', events, children}) {
   const element = document.createElement(tag);
   element.textContent = text;
+  if (events) {
+    for (const [eventName, handler] of Object.entries(events)) {
+      element.addEventListener(eventName, handler);
+    }
+  }
   if (children) {
     element.append(...children);
   }
