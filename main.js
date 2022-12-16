@@ -2,6 +2,7 @@ import {Ui, createElement} from './ui.js';
 
 class App extends Ui {
   static tag = 'test-bark';
+
   init() {
     this.text = createElement({text: 'dog'});
 

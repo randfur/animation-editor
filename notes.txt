@@ -1,3 +1,9 @@
+# 2022-12-16 Friday
+- ui.js smaller, no templating, Element.append(...children) works fine.
+- Probably still want RAII slot that auto swaps out one of the elements.
+- Probably need re-rendering logic.
+  - Do it manually and see what can be generalised.
+
 # 2022-11-29 Tuesday
 const directory = await getDirectoryAccess();
 for await (const entry of directory.entries())
