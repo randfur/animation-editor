@@ -15,3 +15,35 @@ const file = entry[1];
 const writable = await file.createWritable()
 writable.write('dogs')
 writable.close()
+
+# 2022-11-27 Sunday
+- Copied from async-game-engine complex-sprites example.
+- Animation format:
+  - Animation Pack:
+    - Animation list
+  - Animation:
+    - Animation name
+    - Frames per second
+    - Sub animation list
+    - Transform
+    - Layer list
+  - Layer:
+    - Transform
+    - Keyframe list
+  - Keyframe:
+    - Frame count
+    - Element list
+  - Element:
+    - Image reference or Sub animation reference
+  - Image reference:
+    - Image source
+    - Transform
+  - Sub animation reference:
+    - Seek to frame?
+    - Sub animation name
+    - Transform
+  - Sub animation:
+    - Sub animation name
+    - Animation name
+    - Start frame
+    - Restart on loop?

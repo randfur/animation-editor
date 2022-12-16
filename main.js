@@ -10,7 +10,10 @@ class App extends Ui {
       tag: 'button',
       text: 'click me',
       events: {
-        click: () => this.text.textContent = 'bark',
+        click: () => {
+          this.text.textContent = 'bark';
+          this.uiButton.remove();
+        },
       },
     });
 
