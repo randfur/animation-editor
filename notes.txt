@@ -32,7 +32,7 @@
                 },
               }],
             }],
-          }]
+          }],
           subAnimations: {
             spark: {
               animationName: 'spark',

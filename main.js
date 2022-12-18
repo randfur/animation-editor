@@ -1,31 +1,28 @@
+import {sampleAnimationPack} from './sample-animation.js';
+import {loadAnimationPack} from './animation-loader.js';
+import {startAnimation} from './animation-player.js';
 import {Ui, createElement} from './ui.js';
 
-class App extends Ui {
-  static tag = 'test-bark';
+class TestStuff extends Ui {
+  static tag = 'test-stuff';
 
-  init() {
-    this.text = createElement({text: 'dog'});
+  async init() {
+    this.style.backgroundColor = 'black';
+    const canvas = createElement({tag: 'canvas'});
+    this.append(canvas);
 
-    this.uiButton = createElement({
-      tag: 'button',
-      text: 'click me',
-      events: {
-        click: () => {
-          this.text.textContent = 'bark';
-          this.uiButton.remove();
-        },
-      },
-    });
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    this.append(
-      this.text,
-      this.uiButton,
-    );
+    const context = canvas.getContext('2d');
+
+    const loadedAnimationPack = await loadAnimationPack(sampleAnimationPack);
+    const animation = startAnimation(loadAnimationPack, Performance.now());
   }
 }
 
 async function main() {
-  document.body.appendChild(App.create());
+  document.body.appendChild(TestStuff.create());
 }
 
 main();
