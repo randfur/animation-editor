@@ -7,7 +7,10 @@ class TestStuff extends Ui {
   static tag = 'test-stuff';
 
   async init() {
-    this.style.backgroundColor = 'black';
+    this.setStyle({
+      display: 'block',
+      backgroundColor: 'black',
+    });
     const canvas = createElement({tag: 'canvas'});
     this.append(canvas);
 
@@ -16,8 +19,10 @@ class TestStuff extends Ui {
 
     const context = canvas.getContext('2d');
 
-    const loadedAnimationPack = await loadAnimationPack(sampleAnimationPack);
-    const animation = startAnimation(loadAnimationPack, Performance.now());
+    await loadAnimationPack(sampleAnimationPack);
+
+    const animation = startAnimation(sampleAnimationPack, 'dog', performance.now());
+    // TODO: Update and draw animation to canvas every frame.
   }
 }
 

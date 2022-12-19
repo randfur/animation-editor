@@ -13,6 +13,12 @@ export class Ui extends HTMLElement {
     instance.init(initParams);
     return instance;
   }
+
+  setStyle(style) {
+    for (const [property, value] of Object.entries(style)) {
+      this.style[property] = value;
+    }
+  }
 }
 
 export function createElement({tag='div', text='', events, children}) {
