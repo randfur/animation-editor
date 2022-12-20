@@ -1,6 +1,6 @@
 import {sampleAnimationPack} from './sample-animation.js';
 import {loadAnimationPack} from './animation-loader.js';
-import {startAnimation} from './animation-player.js';
+import {AnimationInstance} from './animation-instance.js';
 import {Ui, createElement} from './ui.js';
 
 class TestStuff extends Ui {
@@ -21,7 +21,8 @@ class TestStuff extends Ui {
 
     await loadAnimationPack(sampleAnimationPack);
 
-    const animation = startAnimation(sampleAnimationPack, 'dog', performance.now());
+    const animationInstance = new AnimationInstance(sampleAnimationPack, 'dog', performance.now());
+    console.log(animationInstance);
     // TODO: Update and draw animation to canvas every frame.
   }
 }
