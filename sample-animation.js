@@ -2,6 +2,7 @@ export const sampleAnimationPack = {
   animations: {
     dog: {
       framesPerSecond: 10,
+      loop: true,
       transform: {
         origin: {
           x: 20,
@@ -34,6 +35,7 @@ export const sampleAnimationPack = {
     },
     spark: {
       framesPerSecond: 1,
+      loop: true,
       transform: {
         origin: {
           x: 16,
