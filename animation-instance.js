@@ -43,6 +43,7 @@ export class AnimationInstance {
     if (allAtEnd && this.animation.loop) {
       // TODO: Restart all layers with overshoot offsets.
       // TODO: Are you a dog?
+      // TODO: Ye.
     }
   }
 
