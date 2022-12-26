@@ -3,14 +3,11 @@ export class AnimationInstance {
     this.animationPack = animationPack;
     this.animationName = animationName;
     this.startMilliseconds = startMilliseconds;
-    this.currentMilliseconds = startMilliseconds;
-    this.currentFrame = 0;
 
     this.animation = animationPack.animations[animationName];
 
     this.layerInstances = this.animation.layers.map(layer => {
       return {
-        // TODO: Timing stuff.
         keyframes: layer.keyframes,
         keyframeIndex: 0,
         keyframeEndFrame: layer.keyframes[0].frameCount,
@@ -26,24 +23,35 @@ export class AnimationInstance {
   }
 
   update(newMilliseconds) {
-    this.currentMilliseconds = newMilliseconds;
-    const oldFrame = this.currentFrame;
-    const elaspedSeconds = (this.currentMilliseconds - this.startMilliseconds) / 1000;
-    this.currentFrame = Math.floor(elaspedSeconds / this.animation.framesPerSecond);
+    const elaspedSeconds = (newMilliseconds - this.startMilliseconds) / 1000;
+    const currentFrame = Math.floor(elaspedSeconds / this.animation.framesPerSecond);
 
-    let allAtEnd = false;
+    let allAtEnd = true;
     let endFrame = 0;
     for (const layerInstance of this.layerInstances) {
       // TODO: Increment keyframe index and end frame.
       // TODO: Set endFrame if layer is at end.
-      if (this.currentFrame > layerInstance.keyframeEndFrame) {
+      while (true) {
+        // States before & after ignoring loops:
+        // A) Still within same keyframe.
+        // B) Past end of keyframe into following keyframe.
+        // C) Past end of last keyframe.
+
+        if (layerInstance.keyframeIndex >= layerInstance.keyframes.length) {
+          endFrame = layerInstance.keyframeEndFrame;
+          break;
+        }
+        if (currentFrame < layerInstance.keyframeEndFrame) {
+          allAtEnd = false;
+          break;
+        }
+        const keyframe = layerInstance.keyframes[layerInstance.keyframeIndex];
+        // TODO: Increment to next keyframe.
       }
     }
 
     if (allAtEnd && this.animation.loop) {
       // TODO: Restart all layers with overshoot offsets.
-      // TODO: Are you a dog?
-      // TODO: Ye.
     }
   }
 
