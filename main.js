@@ -23,7 +23,12 @@ class TestStuff extends Ui {
 
     const animationInstance = new AnimationInstance(sampleAnimationPack, 'dog', performance.now());
     console.log(animationInstance);
+    while (true) {
+      const time = await new Promise(requestAnimationFrame);
+      animationInstance.update(time);
+      animationInstance.draw(context, {x: 50, y: 50});
     // TODO: Update and draw animation to canvas every frame.
+    }
   }
 }
 
