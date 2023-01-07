@@ -47,8 +47,6 @@ export class Mat3 {
     // In reality everything is flipped, idk why.
     const multiplyLeft = false;
     const reverseOrder = true;
-    const o = {};
-
 
     const multiplyWith = (otherMat3) => {
       const [l, r] = multiplyLeft ? [otherMat3, this] : [this, otherMat3];
