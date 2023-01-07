@@ -40,7 +40,18 @@ export class Mat3 {
     // }
 
     // The matrix is multiplied on the left of a column vector, we know this because otherwise e and f would pollute the final row.
-    // These work, idk why but they do so trust them. We manually tested them.
+    // We can either multiply on the right with a row vector or on the left with a column vector.
+    // Example:
+    // On right with row vector:
+    //   https://www.wolframalpha.com/input?i=%7B%7B100%2C+100%2C+1%7D%7D+*+%7B%7B1%2C+1%2C+50%7D%2C+%7B-0.5%2C+1%2C+0%7D%2C+%7B0%2C+0%2C+1%7D%7D
+    //   The third value becomes non-1 which is bad.
+    // On left with column vector:
+    //   https://www.wolframalpha.com/input?i=%7B%7B1%2C+1%2C+50%7D%2C+%7B-0.5%2C+1%2C+0%7D%2C+%7B0%2C+0%2C+1%7D%7D+*+%7B%7B100%7D%2C+%7B100%7D%2C+%7B1%7D%7D
+    //   The third value stays as 1.
+    // The translation values are on the right of the matrix, this probably forces the co-ordinate vector to be a column vector.
+    // If we were to use a row vector then the translation values would probably have to be on the bottom of the matrix.
+
+    // These configurations work, idk why but they do so trust them. We manually tested them.
     // The nice order of thinking is:
     // Apply outer transforms like camera first, then instance transform then part transform.
     // For each transform apply origin, scale, rotate then translate.
