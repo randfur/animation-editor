@@ -1,3 +1,6 @@
+# 2023-01-15 Sunday
+- Pulled in the optimised matrix implementation from experiments.
+
 # 2023-01-02 Monday
 - Just draw something.
 - Add totalFrames member to animations, don't rely on longest layer, layers get clipped if they're too short.

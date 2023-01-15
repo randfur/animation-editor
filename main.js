@@ -19,6 +19,7 @@ class TestStuff extends Ui {
     canvas.height = window.innerHeight;
 
     const context = canvas.getContext('2d');
+    context.imageSmoothingEnabled = false;
 
     // await loadAnimationPack(sampleAnimationPack);
 
@@ -41,7 +42,7 @@ class TestStuff extends Ui {
       });
       mat3.applyTransformJson({
         origin: {x: 64, y: 64},
-        scale: {x: 1, y: 1},
+        scale: {x: 2, y: 1},
       });
       mat3.applyToContext(context);
       context.drawImage(dogImage, 0, 0);
