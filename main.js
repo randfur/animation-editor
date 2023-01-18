@@ -5,11 +5,6 @@ import {TransformStack} from './transform-stack.js';
 import {Ui, createElement} from './ui.js';
 import {Mat3} from './mat3.js';
 
-const TAU = Math.PI * 2;
-function createRotate(angle) {
-  return {x: Math.cos(angle), y: Math.sin(angle)};
-}
-
 class TestStuff extends Ui {
   static tag = 'test-stuff';
 
@@ -40,7 +35,6 @@ class TestStuff extends Ui {
       transformStack.current().reset();
       transformStack.current().transformJson({
         translate: {x: 100, y: 100},
-        // rotate: createRotate(time),
       });
       animationInstance.update(time);
       animationInstance.draw(context, transformStack);
