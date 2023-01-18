@@ -6,18 +6,22 @@ export class TransformStack {
     this.currentIndex = 0;
   }
 
+  current() {
+    return this.stack[this.currentIndex];
+  }
+
   save() {
-    while (this.currentIndex >= this.stack.length) {
+    while (this.currentIndex + 1 >= this.stack.length) {
       this.stack.push(new Mat3());
     }
     ++this.currentIndex;
-    const current = this.stack[currentIndex];
-    current.copy(this.stack[currentIndex - 1]);
+    const current = this.stack[this.currentIndex];
+    current.copy(this.stack[this.currentIndex - 1]);
     return current;
   }
 
   restore() {
     --this.currentIndex;
-    return this.stack[currentIndex];
+    return this.stack[this.currentIndex];
   }
 }

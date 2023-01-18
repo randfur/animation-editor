@@ -2,35 +2,47 @@ export const sampleAnimationPack = {
   animations: {
     dog: {
       framesPerSecond: 10,
-      totalFrames: 200,
+      totalFrames: 10,
       loop: true,
-      transform: {
-        origin: {
-          x: 20,
-          y: 80,
-        },
-      },
       layers: [{
+        transform: {
+          origin: {
+            x: 20,
+            y: 80,
+          },
+        },
         keyframes: [{
-          frameCount: 1,
+          frameCount: 5,
           elements: [{
             type: 'image',
-            imageSource: 'dog.png',
-          }, {
+            imageSource: 'dog0.png',
+          }],
+        }, {
+          frameCount: 5,
+          elements: [{
+            type: 'image',
+            imageSource: 'dog1.png',
+          }],
+        }],
+      }, {
+        transform: {
+          translate: {
+            x: 40,
+            y: 40,
+          },
+        },
+        keyframes: [{
+          frameCount: 10,
+          elements: [{
             type: 'ref',
             subAnimation: 'spark',
-            transform: {
-              translate: {
-                x: 10,
-                y: 10,
-              },
-            },
           }],
         }],
       }],
       subAnimations: {
         spark: {
           animationName: 'spark',
+          restart: false,
         },
       },
     },

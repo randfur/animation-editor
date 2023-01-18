@@ -1,3 +1,7 @@
+# 2023-01-19 Wednesday
+- Rewrote some drawing code in terms of TransformStack, it works.
+- Updated the sample animation to have two layers and give the dog two frames.
+
 # 2023-01-15 Sunday
 - Pulled in the optimised matrix implementation from experiments.
 

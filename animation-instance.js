@@ -51,20 +51,27 @@ export class AnimationInstance {
     // }
   }
 
-  draw(context, translate) {
+  draw(context, transformStack) {
+    transformStack.save().transformJson(this.animation.transform);
     for (const layerInstance of this.layerInstances) {
-      // TODO: Draw keyframe elements with appropriate transforming.
       if (layerInstance.keyframeIndex >= layerInstance.keyframes.length) {
         continue;
       }
+
+      transformStack.save().transformJson(layerInstance.transform);
       const elements = layerInstance.keyframes[layerInstance.keyframeIndex].elements;
       for (const element of elements) {
+        transformStack.save().transformJson(element.transform);
         if (element.type === 'image') {
+          transformStack.current().applyToContext(context);
           context.drawImage(element.image, 0, 0);
         } else if (element.type === 'ref') {
-          this.subAnimationInstances[element.subAnimation].draw(context, translate);
+          this.subAnimationInstances[element.subAnimation].draw(context, transformStack);
         }
+        transformStack.restore();
       }
+      transformStack.restore();
     }
+    transformStack.restore();
   }
 }

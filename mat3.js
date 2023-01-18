@@ -22,7 +22,16 @@ export class Mat3 {
     this.f = 0;
   }
 
-  applyTransformJson(transformJson) {
+  copy(otherMat3) {
+    this.a = otherMat3.a;
+    this.b = otherMat3.b;
+    this.c = otherMat3.c;
+    this.d = otherMat3.d;
+    this.e = otherMat3.e;
+    this.f = otherMat3.f;
+  }
+
+  transformJson(transformJson) {
     // interface TransformJson {
     //   origin: Vec2Json;
     //   scale: Vec2Json;
@@ -34,69 +43,77 @@ export class Mat3 {
     //   y: number;
     // }
 
-    // translate
-    // [a c e]   [1 0 tx]
-    // [b d f] * [0 1 ty]
-    // [0 0 1]   [0 0  1]
-    const tx = transformJson.translate?.x ?? 0;
-    const ty = transformJson.translate?.y ?? 0;
-    [
-      this.e,
-      this.f,
-    ] = [
-      this.a * tx + this.c * ty + this.e,
-      this.b * tx + this.d * ty + this.f,
-    ];
+    if (!transformJson) {
+      return;
+    }
 
-    // rotate
-    // [a c e]   [rx -ry  0]
-    // [b d f] * [ry  rx  0]
-    // [0 0 1]   [ 0   0  1]
-    const rx = transformJson.rotate?.x ?? 1;
-    const ry = transformJson.rotate?.y ?? 0;
-    [
-      this.a,
-      this.b,
-      this.c,
-      this.d,
-    ] = [
-      this.a * rx + this.c * ry,
-      this.b * rx + this.d * ry,
-      this.a * -ry + this.c * rx,
-      this.b * -ry + this.d * rx,
-    ];
+    if (transformJson.translate) {
+      // [a c e]   [1 0 tx]
+      // [b d f] * [0 1 ty]
+      // [0 0 1]   [0 0  1]
+      const tx = transformJson.translate.x ?? 0;
+      const ty = transformJson.translate.y ?? 0;
+      [
+        this.e,
+        this.f,
+      ] = [
+        this.a * tx + this.c * ty + this.e,
+        this.b * tx + this.d * ty + this.f,
+      ];
+    }
 
-    // scale
-    // [a c e]   [sx  0  0]
-    // [b d f] * [ 0 sy  0]
-    // [0 0 1]   [ 0  0  1]
-    const sx = transformJson.scale?.x ?? 1;
-    const sy = transformJson.scale?.y ?? 1;
-    [
-      this.a,
-      this.b,
-      this.c,
-      this.d,
-    ] = [
-      this.a * sx,
-      this.b * sx,
-      this.c * sy,
-      this.d * sy,
-    ];
+    if (transformJson.rotate) {
+      // [a c e]   [rx -ry  0]
+      // [b d f] * [ry  rx  0]
+      // [0 0 1]   [ 0   0  1]
+      const rx = transformJson.rotate.x ?? 1;
+      const ry = transformJson.rotate.y ?? 0;
+      [
+        this.a,
+        this.b,
+        this.c,
+        this.d,
+      ] = [
+        this.a * rx + this.c * ry,
+        this.b * rx + this.d * ry,
+        this.a * -ry + this.c * rx,
+        this.b * -ry + this.d * rx,
+      ];
+    }
 
-    // origin
-    // [a c e]   [1 0 -ox]
-    // [b d f] * [0 1 -oy]
-    // [0 0 1]   [0 0   1]
-    const ox = transformJson.origin?.x ?? 0;
-    const oy = transformJson.origin?.y ?? 0;
-    [
-      this.e,
-      this.f,
-    ] = [
-      this.a * -ox + this.c * -oy + this.e,
-      this.b * -ox + this.d * -oy + this.f,
-    ];
+    if (transformJson.scale) {
+      // [a c e]   [sx  0  0]
+      // [b d f] * [ 0 sy  0]
+      // [0 0 1]   [ 0  0  1]
+      const sx = transformJson.scale?.x ?? 1;
+      const sy = transformJson.scale?.y ?? 1;
+      [
+        this.a,
+        this.b,
+        this.c,
+        this.d,
+      ] = [
+        this.a * sx,
+        this.b * sx,
+        this.c * sy,
+        this.d * sy,
+      ];
+    }
+
+    if (transformJson.origin) {
+      // [a c e]   [1 0 -ox]
+      // [b d f] * [0 1 -oy]
+      // [0 0 1]   [0 0   1]
+      const ox = transformJson.origin?.x ?? 0;
+      const oy = transformJson.origin?.y ?? 0;
+      [
+        this.e,
+        this.f,
+      ] = [
+        this.a * -ox + this.c * -oy + this.e,
+        this.b * -ox + this.d * -oy + this.f,
+      ];
+    }
   }
 
   applyToContext(context) {
