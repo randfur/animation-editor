@@ -13,35 +13,37 @@ class TestStuff extends Ui {
       display: 'block',
       backgroundColor: 'black',
     });
-    const canvas = createElement({tag: 'canvas'});
-    this.append(canvas);
+    this.canvas = createElement({tag: 'canvas'});
+    this.append(this.canvas);
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    canvas.style.imageRendering = 'pixelated';
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+    this.canvas.style.imageRendering = 'pixelated';
 
-    const context = canvas.getContext('2d');
-    context.imageSmoothingEnabled = false;
+    this.context = this.canvas.getContext('2d');
+    this.context.imageSmoothingEnabled = false;
 
     await loadAnimationPack(sampleAnimationPack);
 
-    const animationInstance = new AnimationInstance(sampleAnimationPack, 'dog', performance.now());
-    const transformStack = new TransformStack();
-    transformStack.current().transformJson({
-      translate: {x: 100, y: 100},
-    });
+    this.animationInstance = new AnimationInstance(sampleAnimationPack, 'dog', performance.now());
+    this.transformStack = new TransformStack();
+
+    this.run();
+  }
+
+  async run() {
     while (true) {
       const time = await new Promise(requestAnimationFrame);
-      transformStack.current().reset();
-      transformStack.current().applyToContext(context);
+      this.transformStack.current().reset();
+      this.transformStack.current().applyToContext(this.context);
 
-      context.clearRect(0, 0, canvas.width, canvas.height);
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-      transformStack.current().transformJson({
+      this.transformStack.current().transformJson({
         translate: {x: 100, y: 200},
       });
-      animationInstance.update(time);
-      animationInstance.draw(context, transformStack);
+      this.animationInstance.update(time);
+      this.animationInstance.draw(this.context, this.transformStack);
     }
   }
 }

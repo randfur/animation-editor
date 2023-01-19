@@ -1,5 +1,13 @@
 /*
-Using &T to mean T but non-owning.
+import {
+  AnimationPack,
+  Animation,
+  Layer,
+  Keyframe,
+} from './animation-pack.d.ts';
+import {TransformStack} from './transform-stack.js';
+
+// Using &T to mean T but non-owning.
 
 class AnimationInstance {
   animationPack: &AnimationPack;
@@ -10,21 +18,7 @@ class AnimationInstance {
   currentLoopedFrame: number;
 
   layerInstances: Array<interface LayerInstance {
-    layer: &interface Layer {
-      transform: TransformJson;
-      keyframes: Array<interface Keyframe {
-        frameCount: number;
-        transform: TransformJson;
-        elements: Array<interface ImageElement {
-          type: 'image';
-          imageSource: string;
-          image: Image;
-        } | interface SubAnimationReferenceElement {
-          type: 'ref';
-          subAnimationName: string;
-        }>;
-      }>;
-    };
+    layer: &Layer;
     keyframes: &Array<Keyframe>;
     currentKeyframeIndex: number;
     keyframeLoopedEndFrame: number;
