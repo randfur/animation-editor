@@ -18,6 +18,7 @@ class TestStuff extends Ui {
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    canvas.style.imageRendering = 'pixelated';
 
     const context = canvas.getContext('2d');
     context.imageSmoothingEnabled = false;
