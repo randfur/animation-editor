@@ -1,4 +1,10 @@
-# 2023-01-19 Wednesday
+# 2023-01-19 Thursday
+- Added interface definitions here and there.
+- Implemented keyframe progression and looping and sub animation updating.
+- Added sub animation skipSeconds.
+- Extended sample animation to have multiple sub animations of the same animation name.
+
+# 2023-01-18 Wednesday
 - Rewrote some drawing code in terms of TransformStack, it works.
 - Updated the sample animation to have two layers and give the dog two frames.
 

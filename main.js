@@ -28,13 +28,16 @@ class TestStuff extends Ui {
     const transformStack = new TransformStack();
     transformStack.current().transformJson({
       translate: {x: 100, y: 100},
-      rotate: createRotate(TAU * 0.01),
     });
     while (true) {
       const time = await new Promise(requestAnimationFrame);
       transformStack.current().reset();
+      transformStack.current().applyToContext(context);
+
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
       transformStack.current().transformJson({
-        translate: {x: 100, y: 100},
+        translate: {x: 100, y: 200},
       });
       animationInstance.update(time);
       animationInstance.draw(context, transformStack);

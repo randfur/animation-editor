@@ -1,8 +1,37 @@
-// Represents the following matrix shape:
-// [a c e]
-// [b d f]
-// [0 0 1]
-// This matches the order of HTMLCanvasContext2D.setTransform()'s parameters.
+/*
+Represents the following matrix shape:
+[a c e]
+[b d f]
+[0 0 1]
+This matches the order of HTMLCanvasContext2D.setTransform()'s parameters.
+
+class Mat3 {
+  a: number;
+  b: number;
+  c: number;
+  d: number;
+  e: number;
+  f: number;
+
+  constructor();
+  reset();
+  copy(other: Mat3);
+  transformJson(transformJson: TransformJson);
+  applyToContext(context: HTMLRenderingContext2D);
+}
+
+interface TransformJson {
+  origin: Vec2Json;
+  scale: Vec2Json;
+  rotate: Vec2Json;
+  translate: Vec2Json;
+}
+
+interface Vec2Json {
+  x: number;
+  y: number;
+}
+*/
 export class Mat3 {
   constructor() {
     this.a = 1;
@@ -32,17 +61,6 @@ export class Mat3 {
   }
 
   transformJson(transformJson) {
-    // interface TransformJson {
-    //   origin: Vec2Json;
-    //   scale: Vec2Json;
-    //   rotate: Vec2Json;
-    //   translate: Vec2Json;
-    // }
-    // interface Vec2Json {
-    //   x: number;
-    //   y: number;
-    // }
-
     if (!transformJson) {
       return;
     }

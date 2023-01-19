@@ -2,52 +2,71 @@ export const sampleAnimationPack = {
   animations: {
     dog: {
       framesPerSecond: 10,
-      totalFrames: 10,
+      totalFrames: 4,
       loop: true,
+      transform: { origin: { x: 20, y: 80 } },
       layers: [{
-        transform: {
-          origin: {
-            x: 20,
-            y: 80,
-          },
-        },
         keyframes: [{
-          frameCount: 5,
+          frameCount: 2,
           elements: [{
             type: 'image',
             imageSource: 'dog0.png',
           }],
         }, {
-          frameCount: 5,
+          frameCount: 2,
           elements: [{
             type: 'image',
             imageSource: 'dog1.png',
           }],
         }],
       }, {
-        transform: {
-          translate: {
-            x: 40,
-            y: 40,
-          },
-        },
+        transform: { translate: { x: -5, y: 40 } },
         keyframes: [{
-          frameCount: 10,
+          frameCount: 4,
           elements: [{
             type: 'ref',
-            subAnimation: 'spark',
+            subAnimationName: 'spark0',
+          }],
+        }],
+      }, {
+        transform: { translate: { x: 45, y: -5 } },
+        keyframes: [{
+          frameCount: 4,
+          elements: [{
+            type: 'ref',
+            subAnimationName: 'spark1',
+          }],
+        }],
+      }, {
+        transform: { translate: { x: 105, y: 15 } },
+        keyframes: [{
+          frameCount: 4,
+          elements: [{
+            type: 'ref',
+            subAnimationName: 'spark2',
           }],
         }],
       }],
       subAnimations: {
-        spark: {
+        spark0: {
           animationName: 'spark',
           restart: false,
+          skipSeconds: 0,
+        },
+        spark1: {
+          animationName: 'spark',
+          restart: false,
+          skipSeconds: 0.2,
+        },
+        spark2: {
+          animationName: 'spark',
+          restart: false,
+          skipSeconds: 0.6,
         },
       },
     },
     spark: {
-      framesPerSecond: 1,
+      framesPerSecond: 2,
       totalFrames: 2,
       loop: true,
       transform: {

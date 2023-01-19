@@ -1,5 +1,16 @@
 import {Mat3} from './mat3.js';
 
+/*
+class TransformStack {
+  stack: Array<Mat3>;
+  currentIndex: number;
+
+  constructor();
+  current(): Mat3;
+  save(): Mat3;
+  restore(): Mat3;
+}
+*/
 export class TransformStack {
   constructor() {
     this.stack = [new Mat3()];

@@ -1,5 +1,7 @@
+// loadingImages: Map<string, Promise<Image>>;
 const loadingImages = new Map();
 
+// loadImage: (imageSource: string) => Promise<Image>;
 async function loadImage(imageSource) {
   if (!loadingImages.has(imageSource)) {
     loadingImages.set(imageSource, new Promise(resolve => {
@@ -13,6 +15,7 @@ async function loadImage(imageSource) {
   return loadingImages.get(imageSource);
 }
 
+// loadAnimationPack: (animationPack: AnimationPack) => Promise<void>;
 export async function loadAnimationPack(animationPack) {
   const promises = [];
   for (const [animationName, animation] of Object.entries(animationPack.animations)) {

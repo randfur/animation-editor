@@ -1,5 +1,14 @@
+// registered: Set<Ui>;
 const registered = new Set();
 
+/*
+class Ui extends HTMLElement {
+  static tag: string;
+  static create(initParams: object);
+  abstract init(initParams: object);
+  setStyle(style: object);
+}
+*/
 export class Ui extends HTMLElement {
   static tag = null;
 
