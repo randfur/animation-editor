@@ -1,3 +1,8 @@
+# 2023-01-21 Saturday
+- Restructure project folders to be able to have multiple sample animations.
+- Start to define a file format for animation packs.
+  - They're folders full of their image assets and an animation-pack.json file.
+
 # 2023-01-19 Thursday
 - Added interface definitions here and there.
 - Implemented keyframe progression and looping and sub animation updating.

@@ -1,3 +1,5 @@
+// import {AnimationPack} from './animation-pack.d.ts';
+
 // loadingImages: Map<string, Promise<Image>>;
 const loadingImages = new Map();
 
@@ -15,8 +17,9 @@ async function loadImage(imageSource) {
   return loadingImages.get(imageSource);
 }
 
-// loadAnimationPack: (animationPack: AnimationPack) => Promise<void>;
-export async function loadAnimationPack(animationPack) {
+// loadAnimationPack: (directoryPath) => Promise<AnimationPack>;
+export async function loadAnimationPack(directoryPath) {
+  const animationPack = await (await fetch(`${directoryPath}/animation-pack.json`)).json();
   const promises = [];
   for (const [animationName, animation] of Object.entries(animationPack.animations)) {
     for (const layer of animation.layers) {
@@ -24,12 +27,13 @@ export async function loadAnimationPack(animationPack) {
         for (const element of keyframe.elements) {
           if (element.type === 'image' && !element.image) {
             promises.push((async () => {
-              element.image = await loadImage(element.imageSource);
+              element.image = await loadImage(`${directoryPath}/${element.imageSource}`);
             })());
           }
         }
       }
     }
   }
-  return Promise.all(promises);
+  await Promise.all(promises);
+  return animationPack;
 }

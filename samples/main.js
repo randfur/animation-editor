@@ -1,9 +1,8 @@
-import {sampleAnimationPack} from './sample-animation.js';
-import {loadAnimationPack} from './animation-loader.js';
-import {AnimationInstance} from './animation-instance.js';
-import {TransformStack} from './transform-stack.js';
-import {Ui, createElement} from './ui.js';
-import {Mat3} from './mat3.js';
+import {loadAnimationPack} from '../src/animation-loader.js';
+import {AnimationInstance} from '../src/animation-instance.js';
+import {TransformStack} from '../src/transform-stack.js';
+import {Ui, createElement} from '../src/ui.js';
+import {Mat3} from '../src/mat3.js';
 
 class TestStuff extends Ui {
   static tag = 'test-stuff';
@@ -23,9 +22,10 @@ class TestStuff extends Ui {
     this.context = this.canvas.getContext('2d');
     this.context.imageSmoothingEnabled = false;
 
-    await loadAnimationPack(sampleAnimationPack);
 
-    this.animationInstance = new AnimationInstance(sampleAnimationPack, 'dog', performance.now());
+    this.dog3StarsPack = await loadAnimationPack('dog-3-stars');
+
+    this.animationInstance = new AnimationInstance(this.dog3StarsPack, 'dog', performance.now());
     this.transformStack = new TransformStack();
 
     this.run();
