@@ -1,3 +1,33 @@
+# 2023-01-29 Sunday
+- Thoughts on how to do UI:
+  - Solid JS is neat.
+  - const [value, setValue] = createSignal(null); is a cool idea.
+  - Wrap a JSON object with a proxy that auto generates the signals as it's read.
+  - Creates signals for inner values automatically on access.
+  - Sub objects know where they are in their parent object.
+  - Probably can't transparently wrap a JSON object, will need to be its own data type than easily converts into JSON.
+  - UI elements should have a render function that gets called to generate an HTML template.
+  - This render function is aware of signal usages and will update its template instance automatically.
+  - HTML template will be defined in pure JS createElement({...}) style rather than html``, different to Solid JS.
+    - html`` needs lambdas around its signal accesses.
+    - Don't think I'll actually use Solid JS' signals anyway, just copy the idea.
+  - Primary purpose of this design is to have the model be read by multiple UI elements and have them all listen for updates automatically.
+  - Avoid the Redux design where your main.js contains every single link between model, action and UI.
+  - This is just taking the Solid JS design, keeping the rendering pattern but making the signal part of it able to handle deeply nested objects.
+- Thoughts on many animation frames.
+  - Having a long animation with every frame a separate PNG probably doesn't scale well.
+  - Trying to load too many PNGs will fill up the image cache and cause them to decode during runtime as they try to draw.
+  - Maybe instead support something more vector like.
+    - Simple linear line paths that the user draws.
+    - Have a "fill" point that acts as a fill for that area.
+    - The fill can dynamically update as the shape around it changes.
+    - Can cache the fill area as a series of horizontal/vertical lines.
+    - Rendering the lines could be done with WebGL eventually for speed.
+      - This doesn't mesh well with the existing canvas based async-game-engine drawing.
+      - Drawing paths in 2D canvas is probably perfectly fine.
+      - Or maybe just go full WebGL and have the game engine be very opinionated as being sprite based.
+        - You have to draw to OffscreenCanvases and insert them into the 3D render if you want the 2D API.
+
 # 2023-01-21 Saturday
 - Restructure project folders to be able to have multiple sample animations.
 - Start to define a file format for animation packs.
